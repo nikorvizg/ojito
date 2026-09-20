@@ -6,45 +6,126 @@
     <title>Para ti 🌻</title>
     <style>
         body {
-            background-color: #fdf8e7; /* Un fondo cálido y suave */
+            background-color: #fdf8e7;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            text-align: center;
+            margin: 0;
+            overflow-x: hidden;
+            color: #4a4a4a;
+            height: 100vh;
+        }
+
+        /* Estilo general para las "páginas" */
+        .screen {
+            width: 100vw;
+            height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
-            color: #4a4a4a;
+            text-align: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        /* --- PANTALLA DE INICIO --- */
+        #intro-screen {
+            z-index: 10;
+            background-color: #fdf8e7;
+        }
+
+        .intro-title {
+            font-size: 2rem;
+            color: #d4af37;
+            margin-bottom: 20px;
+        }
+
+        .gif-container {
+            cursor: pointer;
+            transition: transform 0.3s;
+            animation: pulse-gif 2s infinite;
+        }
+
+        .gif-container:hover {
+            transform: scale(1.05);
+        }
+
+        .gif-container img {
+            border-radius: 15px;
+            max-width: 250px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .click-hint {
+            margin-top: 20px;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        @keyframes pulse-gif {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        /* --- PANTALLA DEL JARDÍN --- */
+        #garden-screen {
+            opacity: 0;
+            pointer-events: none; /* Desactivado hasta que aparezca */
+            z-index: 5;
         }
 
         .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            max-width: 400px;
+            max-width: 600px;
             padding: 20px;
         }
 
         h1 {
             color: #d4af37;
-            font-size: 2rem;
+            font-size: 2.2rem;
             margin-bottom: 5px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+        }
+
+        #magic-heart {
+            cursor: pointer;
+            display: inline-block;
+            transition: transform 0.1s;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        #magic-heart:active {
+            transform: scale(0.7);
         }
 
         .subtitle {
             font-size: 1.1rem;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             color: #7a7a7a;
         }
 
-        /* Animación y diseño de la flor CSS */
+        .garden {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        /* Animación y diseño de las flores */
+        .flower-scale {
+            display: inline-block;
+            transition: transform 0.3s;
+        }
+
+        .flower-scale:hover {
+            transform: scale(1.1) !important;
+        }
+
         .flower-wrapper {
             position: relative;
-            width: 100px;
-            height: 150px;
-            cursor: pointer;
+            width: 80px;
+            height: 120px;
             animation: float 3s ease-in-out infinite;
         }
 
@@ -52,155 +133,222 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 100px;
-            height: 100px;
+            width: 80px;
+            height: 80px;
             z-index: 2;
-            transition: transform 0.3s ease;
-        }
-
-        .flower:hover {
-            transform: scale(1.05);
         }
 
         .petal {
             position: absolute;
-            width: 30px;
-            height: 85px;
+            width: 24px;
+            height: 68px;
             background: radial-gradient(circle, #ffe600, #fbc02d);
             border-radius: 50%;
-            top: 5px;
-            left: 35px;
-            transform-origin: center 45px;
-            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+            top: 4px;
+            left: 28px;
+            transform-origin: center 36px;
+            box-shadow: 0 0 4px rgba(0,0,0,0.1);
         }
 
-        /* Posicionamiento de los pétalos */
-        .p1 { transform: rotate(0deg); }
-        .p2 { transform: rotate(45deg); }
-        .p3 { transform: rotate(90deg); }
-        .p4 { transform: rotate(135deg); }
-        .p5 { transform: rotate(180deg); }
-        .p6 { transform: rotate(225deg); }
-        .p7 { transform: rotate(270deg); }
-        .p8 { transform: rotate(315deg); }
+        .p1 { transform: rotate(0deg); } .p2 { transform: rotate(45deg); }
+        .p3 { transform: rotate(90deg); } .p4 { transform: rotate(135deg); }
+        .p5 { transform: rotate(180deg); } .p6 { transform: rotate(225deg); }
+        .p7 { transform: rotate(270deg); } .p8 { transform: rotate(315deg); }
 
         .center {
             position: absolute;
-            width: 44px;
-            height: 44px;
+            width: 35px;
+            height: 35px;
             background: radial-gradient(circle, #5d4037, #3e2723);
             border-radius: 50%;
-            top: 28px;
-            left: 28px;
+            top: 22px;
+            left: 22px;
             z-index: 10;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+            box-shadow: inset 0 0 8px rgba(0,0,0,0.5);
         }
 
         .stem {
             position: absolute;
-            width: 8px;
-            height: 100px;
+            width: 6px;
+            height: 80px;
             background: linear-gradient(to right, #2e7d32, #4caf50);
-            top: 60px;
-            left: 46px;
+            top: 48px;
+            left: 37px;
             z-index: 1;
             border-radius: 4px;
         }
 
         .leaf {
             position: absolute;
-            width: 30px;
-            height: 15px;
+            width: 24px;
+            height: 12px;
             background: #4caf50;
             border-radius: 50% 0 50% 0;
-            top: 90px;
-            left: 50px;
+            top: 72px;
+            left: 40px;
             z-index: 1;
             transform: rotate(-20deg);
         }
 
         @keyframes float {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-8px); }
         }
 
-        .hint {
-            font-size: 0.9rem;
-            color: #999;
-            margin-top: 20px;
-            animation: pulse 2s infinite;
+        .riddle {
+            font-size: 0.85rem;
+            color: #bfa888;
+            font-style: italic;
+            margin-top: 10px;
+            opacity: 0.8;
             transition: opacity 0.5s;
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 0.4; }
-            50% { opacity: 1; }
-        }
-
-        /* Estilos del mensaje oculto */
+        /* --- MENSAJE OCULTO --- */
         .hidden-message {
-            margin-top: 25px;
-            padding: 20px;
-            font-size: 1.15rem;
-            line-height: 1.5;
-            color: #4a4a4a;
-            background: #ffffff;
-            border-left: 5px solid #fbc02d;
-            border-radius: 8px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -40%);
+            width: 80%;
+            max-width: 400px;
+            padding: 30px 20px;
+            font-size: 1.25rem;
+            line-height: 1.6;
+            color: #fff;
+            background: rgba(46, 39, 35, 0.95);
+            border: 2px solid #fbc02d;
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
             opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 1.2s ease, transform 1.2s ease;
-            pointer-events: none; /* Para que no estorbe antes de aparecer */
+            visibility: hidden;
+            transition: opacity 1s ease, transform 1s ease;
+            z-index: 100;
         }
 
         .hidden-message.show {
             opacity: 1;
-            transform: translateY(0);
-            pointer-events: auto;
+            visibility: visible;
+            transform: translate(-50%, -50%);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(253, 248, 231, 0.8);
+            backdrop-filter: blur(3px);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1s ease;
+            z-index: 50;
+        }
+
+        .overlay.show {
+            opacity: 1;
+            visibility: visible;
         }
 
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>¡Feliz 21 de Septiembre! 💛</h1>
-        <p class="subtitle">Un pequeño detalle para alegrar tu día...</p>
+    <!-- ================= PANTALLA DE INICIO ================= -->
+    <div id="intro-screen" class="screen">
+        <h2 class="intro-title">Holi, te tengo una sorpresa... ✨</h2>
+        
+        <!-- Aquí está la línea que busca tu GIF -->
+        <div class="gif-container" onclick="entrarAlJardin()">
+            <img src="./mi-sorpresa.gif" alt="Sorpresa">
+        </div>
+        
+        <p class="click-hint">Toca a Morgana :3</p>
+    </div>
 
-        <!-- Contenedor interactivo -->
-        <div class="flower-wrapper" onclick="revelarSecreto()">
-            <div class="flower">
-                <div class="petal p1"></div>
-                <div class="petal p2"></div>
-                <div class="petal p3"></div>
-                <div class="petal p4"></div>
-                <div class="petal p5"></div>
-                <div class="petal p6"></div>
-                <div class="petal p7"></div>
-                <div class="petal p8"></div>
-                <div class="center"></div>
-            </div>
-            <div class="stem"></div>
-            <div class="leaf"></div>
+    <!-- ================= PANTALLA DEL JARDÍN ================= -->
+    <div id="garden-screen" class="screen">
+        <div class="overlay" id="overlay"></div>
+
+        <div class="container">
+            <h1>¡Feliz 21 de Septiembre! <span id="magic-heart">💛</span></h1>
+            <p class="subtitle">Un jardín entero para alegrar tu día...</p>
+
+            <div class="garden" id="garden"></div>
+
+            <p class="riddle" id="pista">Dicen que si le das 3 latidos al corazón, te revela un secreto...</p>
         </div>
 
-        <p class="hint" id="instruccion">Toca la flor...</p>
-
-        <!-- Mensaje oculto -->
         <div class="hidden-message" id="secreto">
-            Y recuerda... <br>
-            <strong>Estas flores virtuales no serán las únicas que recibirás. 😉</strong>
+            Y recuerda... <br><br>
+            <span style="color: #ffe600; font-size: 1.1em;">
+                <strong>Estas flores virtuales puede que no sean las únicas que recibas 👀 </strong>
+            </span>
         </div>
     </div>
 
     <script>
-        function revelarSecreto() {
-            // Muestra el mensaje con una transición suave
-            document.getElementById('secreto').classList.add('show');
-            // Oculta el texto de "Toca la flor"
-            document.getElementById('instruccion').style.opacity = '0';
+        // --- LÓGICA DE TRANSICIÓN DE PANTALLAS ---
+        function entrarAlJardin() {
+            const intro = document.getElementById('intro-screen');
+            const gardenScreen = document.getElementById('garden-screen');
+            
+            // Desvanece la pantalla de inicio
+            intro.style.opacity = '0';
+            
+            // Espera a que termine la animación para esconderla y mostrar el jardín
+            setTimeout(() => {
+                intro.style.display = 'none';
+                gardenScreen.style.pointerEvents = 'auto'; // Activa los clics en el jardín
+                gardenScreen.style.opacity = '1';
+            }, 800); // 800 milisegundos
         }
+
+        // --- LÓGICA DEL JARDÍN Y LAS FLORES ---
+        const garden = document.getElementById('garden');
+        const numFlowers = 7; 
+
+        for(let i = 0; i < numFlowers; i++) {
+            let scale = (0.7 + Math.random() * 0.4).toFixed(2); 
+            let delay = (Math.random() * 2).toFixed(2); 
+
+            let flowerHTML = `
+            <div class="flower-scale" style="transform: scale(${scale})">
+                <div class="flower-wrapper" style="animation-delay: ${delay}s">
+                    <div class="flower">
+                        <div class="petal p1"></div><div class="petal p2"></div>
+                        <div class="petal p3"></div><div class="petal p4"></div>
+                        <div class="petal p5"></div><div class="petal p6"></div>
+                        <div class="petal p7"></div><div class="petal p8"></div>
+                        <div class="center"></div>
+                    </div>
+                    <div class="stem"></div>
+                    <div class="leaf"></div>
+                </div>
+            </div>`;
+            garden.innerHTML += flowerHTML;
+        }
+
+        // --- LÓGICA DEL SECRETO OCULTO (Los 3 latidos) ---
+        let heartClicks = 0;
+        const heart = document.getElementById('magic-heart');
+        
+        heart.addEventListener('click', function() {
+            heartClicks++;
+            
+            if(heartClicks === 3) {
+                document.getElementById('secreto').classList.add('show');
+                document.getElementById('overlay').classList.add('show');
+                document.getElementById('pista').style.opacity = '0';
+            }
+            
+            if(heartClicks > 3) {
+                document.getElementById('secreto').classList.remove('show');
+                document.getElementById('overlay').classList.remove('show');
+                heartClicks = 0; 
+            }
+        });
     </script>
 
 </body>
