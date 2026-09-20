@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para ti 🌻</title>
+    <style>
+        body {
+            background-color: #fdf8e7; /* Un fondo cálido y suave */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            color: #4a4a4a;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 400px;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #d4af37;
+            font-size: 2rem;
+            margin-bottom: 5px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            color: #7a7a7a;
+        }
+
+        /* Animación y diseño de la flor CSS */
+        .flower-wrapper {
+            position: relative;
+            width: 100px;
+            height: 150px;
+            cursor: pointer;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .flower {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100px;
+            height: 100px;
+            z-index: 2;
+            transition: transform 0.3s ease;
+        }
+
+        .flower:hover {
+            transform: scale(1.05);
+        }
+
+        .petal {
+            position: absolute;
+            width: 30px;
+            height: 85px;
+            background: radial-gradient(circle, #ffe600, #fbc02d);
+            border-radius: 50%;
+            top: 5px;
+            left: 35px;
+            transform-origin: center 45px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+
+        /* Posicionamiento de los pétalos */
+        .p1 { transform: rotate(0deg); }
+        .p2 { transform: rotate(45deg); }
+        .p3 { transform: rotate(90deg); }
+        .p4 { transform: rotate(135deg); }
+        .p5 { transform: rotate(180deg); }
+        .p6 { transform: rotate(225deg); }
+        .p7 { transform: rotate(270deg); }
+        .p8 { transform: rotate(315deg); }
+
+        .center {
+            position: absolute;
+            width: 44px;
+            height: 44px;
+            background: radial-gradient(circle, #5d4037, #3e2723);
+            border-radius: 50%;
+            top: 28px;
+            left: 28px;
+            z-index: 10;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .stem {
+            position: absolute;
+            width: 8px;
+            height: 100px;
+            background: linear-gradient(to right, #2e7d32, #4caf50);
+            top: 60px;
+            left: 46px;
+            z-index: 1;
+            border-radius: 4px;
+        }
+
+        .leaf {
+            position: absolute;
+            width: 30px;
+            height: 15px;
+            background: #4caf50;
+            border-radius: 50% 0 50% 0;
+            top: 90px;
+            left: 50px;
+            z-index: 1;
+            transform: rotate(-20deg);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .hint {
+            font-size: 0.9rem;
+            color: #999;
+            margin-top: 20px;
+            animation: pulse 2s infinite;
+            transition: opacity 0.5s;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+
+        /* Estilos del mensaje oculto */
+        .hidden-message {
+            margin-top: 25px;
+            padding: 20px;
+            font-size: 1.15rem;
+            line-height: 1.5;
+            color: #4a4a4a;
+            background: #ffffff;
+            border-left: 5px solid #fbc02d;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1.2s ease, transform 1.2s ease;
+            pointer-events: none; /* Para que no estorbe antes de aparecer */
+        }
+
+        .hidden-message.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>¡Feliz 21 de Septiembre! 💛</h1>
+        <p class="subtitle">Un pequeño detalle para alegrar tu día...</p>
+
+        <!-- Contenedor interactivo -->
+        <div class="flower-wrapper" onclick="revelarSecreto()">
+            <div class="flower">
+                <div class="petal p1"></div>
+                <div class="petal p2"></div>
+                <div class="petal p3"></div>
+                <div class="petal p4"></div>
+                <div class="petal p5"></div>
+                <div class="petal p6"></div>
+                <div class="petal p7"></div>
+                <div class="petal p8"></div>
+                <div class="center"></div>
+            </div>
+            <div class="stem"></div>
+            <div class="leaf"></div>
+        </div>
+
+        <p class="hint" id="instruccion">Toca la flor...</p>
+
+        <!-- Mensaje oculto -->
+        <div class="hidden-message" id="secreto">
+            Y recuerda... <br>
+            <strong>Estas flores virtuales no serán las únicas que recibirás. 😉</strong>
+        </div>
+    </div>
+
+    <script>
+        function revelarSecreto() {
+            // Muestra el mensaje con una transición suave
+            document.getElementById('secreto').classList.add('show');
+            // Oculta el texto de "Toca la flor"
+            document.getElementById('instruccion').style.opacity = '0';
+        }
+    </script>
+
+</body>
+</html>
